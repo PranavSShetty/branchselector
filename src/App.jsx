@@ -8,6 +8,7 @@ import { getCurrentUser } from "./services/authService";
 import AuthenticatedNavBar from "./Components/Navbar/AuthenticatedNavBar";
 import { LoadingPage } from "./pages/LoadingPage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import WhatsappPopup from "./Components/WhatsApp/WhatsAppPopup";
 
 library.add(fas);
 
@@ -55,6 +56,7 @@ function App() {
         <Outlet />
       </Suspense>
       <Footer />
+      <WhatsappPopup />
     </main>
   );
 }

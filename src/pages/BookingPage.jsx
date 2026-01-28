@@ -1,49 +1,64 @@
 import SurePass from "../assets/SurePassLogo.jpeg";
 import Img from "../assets/bookAppointment.svg";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {BundlePlanCard, CounsellingPlanCard} from "./PricingPage/PricingPage";
-import { LoadingPage } from "./LoadingPage";
-import { getPricingPlans } from "./PricingPage/PricingPlans";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
-
+// Simple form for booking appointments via WhatsApp
 function BookingPage() {
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phoneNumber: "",
+    selectedDate: "",
+  });
+  const [captchaChecked, setCaptchaChecked] = useState(false);
 
-  const handleCheckout = (plan,currencyCode) =>{
-  navigate('/checkout',{state:{plan:plan,currencyCode:currencyCode}})
-  }
+  const handleCaptchaChange = () => {
+    setCaptchaChecked(true);
+  };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
- 
-  const [plans, setPlans] = useState(null);
-  const [currency, setCurrency] = useState('₹');
-  const [loading, setLoading] = useState(true);
-  const [currencyCode, setCurrencyCode] = useState(null)
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  useEffect(() => {
-    const fetchPricingPlans = async () => {
-      const data = await getPricingPlans();
-      if (data) {
+    if (!captchaChecked) {
+      alert("Please complete the ReCAPTCHA verification.");
+      return;
+    }
 
-        setPlans(data.plan);
-        setCurrency(data.currency);
-        setCurrencyCode(data.currencyCode);
-      }
-      setLoading(false);
-    };
+    const message = `
+Hello! I would like to book an appointment.
+Full Name: ${formData.fullName}
+Email: ${formData.email}
+Phone Number: ${formData.phoneNumber}
+Preferred Date: ${formData.selectedDate}
+    `;
 
-    fetchPricingPlans();
-  }, []);
-  if (loading) {
-    return <LoadingPage/>;
-  }
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappNumber = "919902266860"; // replace with your number
 
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    const whatsappUrl = isMobile
+      ? `whatsapp://send?phone=${whatsappNumber}&text=${encodedMessage}`
+      : `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, "_blank");
+    toast.success("Redirecting to WhatsApp to send your booking request!");
+  };
 
   return (
-    <main className="py-0  my-8 bg-white">
-      <div className="  text-gray-600 md:p-8">
-        <div className="max-w-lg mx-auto justify-between lg:flex lg:max-w-none ">
+    <main className="py-0 my-8 bg-white">
+      <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:p-8">
+        <div className="max-w-lg mx-auto gap-12 justify-between lg:flex lg:max-w-none lg:mr-20">
           <div className="flex flex-col p-4 md:p-1">
             <div className="max-w-lg space-y-3">
               <p className="text-gray-800 text-2xl font-bold sm:text-3xl">
@@ -54,22 +69,16 @@ function BookingPage() {
                 towards the educational courses that best align with your career
                 aspirations.
               </p>
-              <h3 className="text-indigo-600 font-semibold">
-                Choose our Credits + Counselling bundles to save more! 🎉
-              </h3>
-              <div>
-              </div>
             </div>
 
             <img
               src={Img}
-              alt="illustration img"
-              className="hidden md:flex w-48 ml-56 "
+              alt="illustration"
+              className="hidden md:flex w-48 ml-56"
             />
+
             <div className="hidden md:block">
-              <p className="font-semibold text-sm">
-                &nbsp;&nbsp;Counselling Partner,
-              </p>
+              <p className="font-semibold text-sm">Counselling Partner,</p>
               <div className="flex">
                 <img src={SurePass} alt="sure pass logo" className="w-40" />
                 <p className="w-48 text-[0.6rem] py-2">
@@ -80,13 +89,80 @@ function BookingPage() {
             </div>
           </div>
 
-      <div   className="ml-0 lg:ml-36  sm:p-8 font-poppins">
-            <div className="w-full">
-            <CounsellingPlanCard plans={plans} currency={currency} currencyCode={currencyCode} clickHandler={handleCheckout}/>
-            <BundlePlanCard plans = {plans} currency={currency} currencyCode={currencyCode} clickHandler={handleCheckout}/>
-            </div>
+          <div className="bg-white flex-1 sm:max-w-lg lg:max-w-md shadow-lg border rounded-md duration-300 hover:shadow-sm px-6 lg:pt-2">
+            <form onSubmit={handleSubmit} className="space-y-3 py-6 md:py-2">
+              <p className="font-bold text-lg">Book Appointment</p>
+
+              <div>
+                <label className="font-medium text-sm text-gray-500">Full name</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full mt-1 px-3 py-1 text-gray-500 outline-none border bg-white shadow-sm rounded-lg"
+                />
+              </div>
+
+              <div>
+                <label className="font-medium text-sm text-gray-500">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full mt-1 px-3 py-1 text-gray-500 outline-none border bg-white shadow-sm rounded-lg"
+                />
+              </div>
+
+              <div>
+                <label className="font-medium text-sm text-gray-500">Phone Number</label>
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full mt-1 px-3 py-1 text-gray-500 outline-none border bg-white shadow-sm rounded-lg"
+                />
+              </div>
+
+              <div>
+                <label className="font-medium text-sm text-gray-500">Select Date</label>
+                <input
+                  type="datetime-local"
+                  name="selectedDate"
+                  value={formData.selectedDate}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full mt-1 px-3 py-1.5 text-gray-500 outline-none border bg-white shadow-sm rounded-lg"
+                />
+              </div>
+
+              <div className="flex items-start justify-center sm:justify-start mx-4 md:mx-0">
+                <ReCAPTCHA
+                  sitekey="6Le3tq0pAAAAAIVfl381LNT7XKGE3uWsjll_g2gY"
+                  onChange={handleCaptchaChange}
+                  className="scale-75 md:scale-110 lg:scale-90"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+              >
+                Book Appointment
+              </button>
+
+              <p className="mt-3 text-xs font-medium text-center">
+                We will reach out to you to confirm the appointment date
+              </p>
+            </form>
           </div>
-          <div className="md:hidden mt-5 ml-5">
+
+          <div className="md:hidden mt-5">
             <p className="font-bold text-sm">Counselling Partner,</p>
             <div className="flex">
               <img src={SurePass} alt="sure pass logo" className="w-40" />

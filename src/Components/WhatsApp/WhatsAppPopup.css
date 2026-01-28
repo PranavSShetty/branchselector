@@ -1,0 +1,145 @@
+/* Floating Button */
+.wa-float {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+
+  background: #25d366;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.wa-float img {
+  width: 34px;
+  height: 34px;
+  display: block;
+}
+
+/* Popup */
+.wa-popup {
+  position: fixed;
+  bottom: 95px;
+  left: 20px;
+  width: 320px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  animation: fadeUp 0.25s ease;
+  z-index: 1001;
+}
+
+/* Header */
+.wa-header {
+  background: #008069;
+  color: white;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wa-user {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.wa-user img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+.wa-user span {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+}
+
+.wa-user i {
+  width: 8px;
+  height: 8px;
+  background: #25d366;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.wa-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Body */
+.wa-body {
+  background-color: #efeae2;
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.04) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+  padding: 14px;
+}
+
+.wa-bubble {
+  background: white;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  width: fit-content;
+}
+
+/* Footer */
+.wa-footer {
+  background: #efeae2;
+  padding: 12px;
+}
+
+.wa-footer button {
+  width: 100%;
+  background: #25d366;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 12px;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.wa-footer img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Animation */
+@keyframes fadeUp {
+  from {
+    transform: translateY(15px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
