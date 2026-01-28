@@ -1,9 +1,27 @@
-/* Floating Button */
-.wa-float {
+/* =========================
+   Hover Wrapper (main anchor)
+========================= */
+.wa-hover-wrapper {
   position: fixed;
   bottom: 20px;
   left: 20px;
+  z-index: 1000;
+}
 
+/* Invisible hover buffer to prevent flicker */
+.wa-hover-wrapper::before {
+  content: "";
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+}
+
+/* =========================
+   Floating Button
+========================= */
+.wa-float {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -17,7 +35,6 @@
   justify-content: center;
 
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
 }
 
 .wa-float img {
@@ -26,26 +43,31 @@
   display: block;
 }
 
-/* Popup */
+/* =========================
+   Popup
+========================= */
 .wa-popup {
-  position: fixed;
-  bottom: 95px;
-  left: 20px;
+  position: absolute;
+  bottom: 65px;
+  left: 0;
+
   width: 320px;
   border-radius: 14px;
   overflow: hidden;
+
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
   animation: fadeUp 0.25s ease;
-  z-index: 1001;
 }
 
-/* Header */
+/* =========================
+   Header
+========================= */
 .wa-header {
   background: #008069;
   color: white;
   padding: 10px 12px;
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -77,15 +99,9 @@
   display: inline-block;
 }
 
-.wa-close {
-  background: none;
-  border: none;
-  font-size: 22px;
-  color: white;
-  cursor: pointer;
-}
-
-/* Body */
+/* =========================
+   Body
+========================= */
 .wa-body {
   background-color: #efeae2;
   background-image: radial-gradient(
@@ -104,7 +120,9 @@
   width: fit-content;
 }
 
-/* Footer */
+/* =========================
+   Footer
+========================= */
 .wa-footer {
   background: #efeae2;
   padding: 12px;
@@ -116,6 +134,7 @@
   border: none;
   border-radius: 999px;
   padding: 10px 12px;
+
   font-size: 15px;
   color: white;
   cursor: pointer;
@@ -132,7 +151,9 @@
   display: block;
 }
 
-/* Animation */
+/* =========================
+   Animation
+========================= */
 @keyframes fadeUp {
   from {
     transform: translateY(15px);
