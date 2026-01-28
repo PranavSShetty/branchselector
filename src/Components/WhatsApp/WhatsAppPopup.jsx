@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./WhatsAppPopup.css";
 import ananthImg from "../../assets/ananth.jpg";
+import whatsappImg from "../../assets/whatsapp.png";
 
 const WhatsAppPopup = () => {
   const [open, setOpen] = useState(false);
@@ -68,10 +69,7 @@ const WhatsAppPopup = () => {
           aria-label="Open WhatsApp chat"
           onClick={handleToggleClick}
         >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-            alt="WhatsApp"
-          />
+          <img src={whatsappImg} alt="WhatsApp" />
         </button>
 
         {/* Popup */}
@@ -90,7 +88,7 @@ const WhatsAppPopup = () => {
                   </span>
                 </div>
               </div>
-              
+
               <button
                 className="wa-close"
                 onClick={handleClose}
@@ -110,10 +108,7 @@ const WhatsAppPopup = () => {
 
             <div className="wa-footer">
               <button onClick={openChat}>
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                  alt=""
-                />
+                <img src={whatsappImg} alt="WhatsApp" />
                 Chat on WhatsApp
               </button>
             </div>
