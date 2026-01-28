@@ -23,7 +23,7 @@ const WhatsAppPopup = () => {
     );
   };
 
-  /* ---------------- DESKTOP (HOVER) ---------------- */
+  /* ---------- DESKTOP (HOVER) ---------- */
   const handleMouseEnter = () => {
     if (isTouchDevice) return;
     clearTimeout(closeTimeout.current);
@@ -37,13 +37,13 @@ const WhatsAppPopup = () => {
     }, 120);
   };
 
-  /* ---------------- MOBILE (CLICK) ---------------- */
+  /* ---------- MOBILE (CLICK) ---------- */
   const handleToggleClick = () => {
     if (!isTouchDevice) return;
-    setOpen((prev) => !prev);
+    setOpen(true);
   };
 
-  const handleCloseClick = () => {
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -52,66 +52,77 @@ const WhatsAppPopup = () => {
   }, []);
 
   return (
-    <div
-      className="wa-hover-wrapper"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* WhatsApp Button */}
-      <button
-        className="wa-float"
-        aria-label="Open WhatsApp chat"
-        onClick={handleToggleClick}
-      >
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-          alt="WhatsApp"
-        />
-      </button>
+    <>
+      {/* ✅ Mobile-only overlay (click outside to close) */}
+      {isTouchDevice && open && (
+        <div className="wa-mobile-overlay" onClick={handleClose} />
+      )}
 
-      {/* Popup */}
-      {open && (
-        <div className="wa-popup">
-          <div className="wa-header">
-            <div className="wa-user">
-              <img src={ananthImg} alt="Dr. Ananth Prabhu" />
-              <div>
-                <strong>Dr. Ananth Prabhu</strong>
-                <span>
-                  <i></i> Online
-                </span>
+      <div
+        className="wa-hover-wrapper"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* WhatsApp Button */}
+        <button
+          className="wa-float"
+          aria-label="Open WhatsApp chat"
+          onClick={handleToggleClick}
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+            alt="WhatsApp"
+          />
+        </button>
+
+        {/* Popup */}
+        {open && (
+          <div
+            className="wa-popup"
+            onClick={(e) => e.stopPropagation()} // ✅ prevent overlay close
+          >
+            <div className="wa-header">
+              <div className="wa-user">
+                <img src={ananthImg} alt="Dr. Ananth Prabhu" />
+                <div>
+                  <strong>Dr. Ananth Prabhu</strong>
+                  <span>
+                    <i></i> Online
+                  </span>
+                </div>
+              </div>
+
+              {/* ❌ Close */}
+              <button
+                className="wa-close"
+                onClick={handleClose}
+                aria-label="Close WhatsApp popup"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="wa-body">
+              <div className="wa-bubble">
+                Hi there 👋 <br />
+                <br />
+                How can I help you?
               </div>
             </div>
-           
-            <button
-              className="wa-close"
-              onClick={handleCloseClick}
-              aria-label="Close WhatsApp popup"
-            >
-              ×
-            </button>
-          </div>
 
-          <div className="wa-body">
-            <div className="wa-bubble">
-              Hi there 👋 <br />
-              <br />
-              How can I help you?
+            <div className="wa-footer">
+              <button onClick={openChat}>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                  alt=""
+                />
+                Chat on WhatsApp
+              </button>
             </div>
           </div>
-
-          <div className="wa-footer">
-            <button onClick={openChat}>
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                alt=""
-              />
-              Chat on WhatsApp
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

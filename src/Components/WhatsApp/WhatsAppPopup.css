@@ -173,6 +173,16 @@
 }
 
 /* =========================
+   Mobile click-outside overlay
+========================= */
+.wa-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 999;
+}
+
+/* =========================
    Animation
 ========================= */
 @keyframes fadeUp {
