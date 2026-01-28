@@ -5,7 +5,10 @@ import ananthImg from "../../assets/ananth.jpg";
 const WhatsAppPopup = () => {
   const [open, setOpen] = useState(false);
   const closeTimeout = useRef(null);
-  const manualClose = useRef(false);
+
+  const isTouchDevice =
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
   const phone = "918951511111";
   const message =
@@ -20,29 +23,30 @@ const WhatsAppPopup = () => {
     );
   };
 
+  /* ---------------- DESKTOP (HOVER) ---------------- */
   const handleMouseEnter = () => {
-    if (manualClose.current) return; // 👈 block reopen after manual close
+    if (isTouchDevice) return;
     clearTimeout(closeTimeout.current);
     setOpen(true);
   };
 
   const handleMouseLeave = () => {
+    if (isTouchDevice) return;
     closeTimeout.current = setTimeout(() => {
       setOpen(false);
     }, 120);
   };
 
-  const handleManualClose = () => {
-    manualClose.current = true;
-    setOpen(false);
-
-    // allow hover again after cursor leaves area
-    setTimeout(() => {
-      manualClose.current = false;
-    }, 300);
+  /* ---------------- MOBILE (CLICK) ---------------- */
+  const handleToggleClick = () => {
+    if (!isTouchDevice) return;
+    setOpen((prev) => !prev);
   };
 
-  // Cleanup timeout on unmount
+  const handleCloseClick = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     return () => clearTimeout(closeTimeout.current);
   }, []);
@@ -53,8 +57,12 @@ const WhatsAppPopup = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Floating WhatsApp Button */}
-      <button className="wa-float" aria-label="Open WhatsApp chat">
+      {/* WhatsApp Button */}
+      <button
+        className="wa-float"
+        aria-label="Open WhatsApp chat"
+        onClick={handleToggleClick}
+      >
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
           alt="WhatsApp"
@@ -74,10 +82,10 @@ const WhatsAppPopup = () => {
                 </span>
               </div>
             </div>
-            
+           
             <button
               className="wa-close"
-              onClick={handleManualClose}
+              onClick={handleCloseClick}
               aria-label="Close WhatsApp popup"
             >
               ×
