@@ -18,7 +18,7 @@
   height: 20px;
 }
 
-/* ✅ Disable hover buffer on touch devices */
+/* Disable hover buffer on touch devices */
 @media (hover: none) and (pointer: coarse) {
   .wa-hover-wrapper::before {
     display: none;

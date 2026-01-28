@@ -53,7 +53,6 @@ const WhatsAppPopup = () => {
 
   return (
     <>
-      {/* ✅ Mobile-only overlay (click outside to close) */}
       {isTouchDevice && open && (
         <div className="wa-mobile-overlay" onClick={handleClose} />
       )}
@@ -79,7 +78,7 @@ const WhatsAppPopup = () => {
         {open && (
           <div
             className="wa-popup"
-            onClick={(e) => e.stopPropagation()} // ✅ prevent overlay close
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="wa-header">
               <div className="wa-user">
@@ -91,8 +90,7 @@ const WhatsAppPopup = () => {
                   </span>
                 </div>
               </div>
-
-              {/* ❌ Close */}
+              
               <button
                 className="wa-close"
                 onClick={handleClose}
