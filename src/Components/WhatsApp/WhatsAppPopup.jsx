@@ -5,6 +5,7 @@ import ananthImg from "../../assets/ananth.jpg";
 const WhatsAppPopup = () => {
   const [open, setOpen] = useState(false);
   const closeTimeout = useRef(null);
+  const manualClose = useRef(false);
 
   const phone = "918951511111";
   const message =
@@ -20,6 +21,7 @@ const WhatsAppPopup = () => {
   };
 
   const handleMouseEnter = () => {
+    if (manualClose.current) return; // 👈 block reopen after manual close
     clearTimeout(closeTimeout.current);
     setOpen(true);
   };
@@ -30,7 +32,17 @@ const WhatsAppPopup = () => {
     }, 120);
   };
 
-  // ✅ Cleanup timeout on unmount (good practice)
+  const handleManualClose = () => {
+    manualClose.current = true;
+    setOpen(false);
+
+    // allow hover again after cursor leaves area
+    setTimeout(() => {
+      manualClose.current = false;
+    }, 300);
+  };
+
+  // Cleanup timeout on unmount
   useEffect(() => {
     return () => clearTimeout(closeTimeout.current);
   }, []);
@@ -62,6 +74,14 @@ const WhatsAppPopup = () => {
                 </span>
               </div>
             </div>
+            
+            <button
+              className="wa-close"
+              onClick={handleManualClose}
+              aria-label="Close WhatsApp popup"
+            >
+              ×
+            </button>
           </div>
 
           <div className="wa-body">
