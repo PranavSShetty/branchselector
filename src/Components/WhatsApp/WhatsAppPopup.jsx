@@ -13,8 +13,9 @@ const WhatsAppPopup = () => {
 
   const phone = "918951511111";
   const message =
-    "Hello Sir, I am requesting an appointment. Please let me know the available slots.\n" +
-    "Source: BranchSelector Website";
+  "Hello Sir, I am requesting an appointment. Please let me know the available slots.\n\n" +
+  "> Source: BranchSelector Website";
+
 
   const openChat = () => {
     window.open(
