@@ -141,13 +141,7 @@ Preferred Date: ${formData.selectedDate}
                 />
               </div>
 
-              <div className="flex items-start justify-center sm:justify-start mx-4 md:mx-0">
-                <ReCAPTCHA
-                  sitekey="6Le3tq0pAAAAAIVfl381LNT7XKGE3uWsjll_g2gY"
-                  onChange={handleCaptchaChange}
-                  className="scale-75 md:scale-110 lg:scale-90"
-                />
-              </div>
+              
 
               <button
                 type="submit"
