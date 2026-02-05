@@ -1,6 +1,5 @@
 import SurePass from "../assets/SurePassLogo.jpeg";
 import Img from "../assets/bookAppointment.svg";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -12,11 +11,6 @@ function BookingPage() {
     phoneNumber: "",
     selectedDate: "",
   });
-  const [captchaChecked, setCaptchaChecked] = useState(false);
-
-  const handleCaptchaChange = () => {
-    setCaptchaChecked(true);
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -29,21 +23,17 @@ function BookingPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!captchaChecked) {
-      alert("Please complete the ReCAPTCHA verification.");
-      return;
-    }
-
     const message = `
 Hello! I would like to book an appointment.
 Full Name: ${formData.fullName}
 Email: ${formData.email}
 Phone Number: ${formData.phoneNumber}
 Preferred Date: ${formData.selectedDate}
-    `;
+> Source: BranchSelector Website
+    ` ;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = "919902266860"; // replace with your number
+    const whatsappNumber = "918951511111"; // replace with your number
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -89,12 +79,14 @@ Preferred Date: ${formData.selectedDate}
             </div>
           </div>
 
-          <div className="bg-white flex-1 sm:max-w-lg lg:max-w-md shadow-lg border rounded-md duration-300 hover:shadow-sm px-6 lg:pt-2">
+          <div className="bg-white flex-1 sm:max-w-lg lg:max-w-md shadow-lg border rounded-md px-6 lg:pt-2">
             <form onSubmit={handleSubmit} className="space-y-3 py-6 md:py-2">
               <p className="font-bold text-lg">Book Appointment</p>
 
               <div>
-                <label className="font-medium text-sm text-gray-500">Full name</label>
+                <label className="font-medium text-sm text-gray-500">
+                  Full name
+                </label>
                 <input
                   type="text"
                   name="fullName"
@@ -106,7 +98,9 @@ Preferred Date: ${formData.selectedDate}
               </div>
 
               <div>
-                <label className="font-medium text-sm text-gray-500">Email</label>
+                <label className="font-medium text-sm text-gray-500">
+                  Email
+                </label>
                 <input
                   type="email"
                   name="email"
@@ -118,7 +112,9 @@ Preferred Date: ${formData.selectedDate}
               </div>
 
               <div>
-                <label className="font-medium text-sm text-gray-500">Phone Number</label>
+                <label className="font-medium text-sm text-gray-500">
+                  Phone Number
+                </label>
                 <input
                   type="tel"
                   name="phoneNumber"
@@ -130,7 +126,9 @@ Preferred Date: ${formData.selectedDate}
               </div>
 
               <div>
-                <label className="font-medium text-sm text-gray-500">Select Date</label>
+                <label className="font-medium text-sm text-gray-500">
+                  Select Date
+                </label>
                 <input
                   type="datetime-local"
                   name="selectedDate"
@@ -141,11 +139,9 @@ Preferred Date: ${formData.selectedDate}
                 />
               </div>
 
-              
-
               <button
                 type="submit"
-                className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 rounded-lg"
               >
                 Book Appointment
               </button>
